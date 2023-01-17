@@ -15,6 +15,7 @@ public class CommonUtil {
 	}
 
 	public static void startTimer() {
+		stopWatch.reset();
 		stopWatch.start();
 	}
 
