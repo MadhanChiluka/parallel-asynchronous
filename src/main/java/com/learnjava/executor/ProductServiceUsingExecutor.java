@@ -14,7 +14,6 @@ import com.learnjava.domain.Product;
 import com.learnjava.domain.ProductInfo;
 import com.learnjava.domain.Review;
 import com.learnjava.service.ProductInfoService;
-import com.learnjava.service.ProductService;
 import com.learnjava.service.ReviewService;
 
 public class ProductServiceUsingExecutor {
