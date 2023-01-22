@@ -2,6 +2,8 @@ package com.learnjava.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.concurrent.ForkJoinPool;
+
 import org.junit.jupiter.api.Test;
 
 import com.learnjava.domain.checkout.Cart;
@@ -19,6 +21,11 @@ class CheckoutServiceTest {
 	}
 
 	@Test
+	void parallelism() {
+		System.out.println("Parallelism : " + ForkJoinPool.getCommonPoolParallelism());
+	}
+
+	@Test
 	void testCheckout_6_items() {
 		// given
 		Cart cart = DataSet.createCart(6);
@@ -30,12 +37,25 @@ class CheckoutServiceTest {
 		assertEquals(CheckoutStatus.SUCCESS, checkoutResponse.getCheckoutStatus());
 
 	}
-	
-	
+
 	@Test
 	void testCheckout_15_items() {
 		// given
 		Cart cart = DataSet.createCart(25);
+
+		// when
+		CheckoutResponse checkoutResponse = checkoutService.checkout(cart);
+
+		// then
+		assertEquals(CheckoutStatus.FAILURE, checkoutResponse.getCheckoutStatus());
+
+	}
+
+	@Test
+	void modify_parallelism() {
+		System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "100");
+		// given
+		Cart cart = DataSet.createCart(100);
 
 		// when
 		CheckoutResponse checkoutResponse = checkoutService.checkout(cart);
