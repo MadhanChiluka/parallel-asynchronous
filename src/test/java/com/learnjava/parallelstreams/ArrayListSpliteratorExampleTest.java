@@ -12,7 +12,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import com.learnjava.util.DataSet;
 
-@TestMethodOrder(MethodOrderer.MethodName.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ArrayListSpliteratorExampleTest {
 	ArrayListSpliteratorExample arrayListSpliteratorExample = new ArrayListSpliteratorExample();
 
