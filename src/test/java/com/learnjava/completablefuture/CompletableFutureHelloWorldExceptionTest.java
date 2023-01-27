@@ -33,6 +33,7 @@ class CompletableFutureHelloWorldExceptionTest {
 		//then world! Hi CompletableFuture
 		assertEquals(" WORLD! HI COMPLETABLEFUTURE", result);
 	}
+
 	
 	@Test
 	void helloWorld_3_async_calls_2() {

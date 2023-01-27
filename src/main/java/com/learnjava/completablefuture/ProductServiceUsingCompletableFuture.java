@@ -69,8 +69,7 @@ public class ProductServiceUsingCompletableFuture {
 		log("Total Time Taken : " + stopWatch.getTime());
 		return product;
 	}
-	
-	
+
 	public Product retrieveProductDetailsWithInventory_approach2(String productId) {
 		stopWatch.start();
 
@@ -81,10 +80,16 @@ public class ProductServiceUsingCompletableFuture {
 				});
 
 		CompletableFuture<Review> cfReview = CompletableFuture
-				.supplyAsync(() -> reviewService.retrieveReviews(productId));
+				.supplyAsync(() -> reviewService.retrieveReviews(productId)).exceptionally((e) -> {
+					log("Handled Exception in reviewService : " + e.getMessage());
+					return Review.builder().noOfReviews(0).overallRating(0.0).build();
+				});
 
 		Product product = cfProductInfo
-				.thenCombine(cfReview, (productInfo, review) -> new Product(productId, productInfo, review)).join();
+				.thenCombine(cfReview, (productInfo, review) -> new Product(productId, productInfo, review))
+				.whenComplete((product1, ex) -> {
+					log("Inside whenComplete : " + product1 + " and the exception is" + ex.getMessage());
+				}).join();
 
 		log("Total Time Taken : " + stopWatch.getTime());
 		return product;

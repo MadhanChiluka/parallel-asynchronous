@@ -1,6 +1,7 @@
 package com.learnjava.completablefuture;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -48,6 +49,47 @@ class CompletableFutureHelloWorldTest {
 		
 		//then
 		assertEquals("HELLO WORLD! HI COMPLETABLEFUTURE", helloWorld);
+	}
+	
+	
+	@Test
+	void helloWorld_3_async_calls_custom_threadPool() {
+		
+		//when
+		String result = cfhw.helloWorld_3_async_calls_custom_threadPool();
+		
+		//then world! Hi CompletableFuture
+		assertEquals("HELLO WORLD! HI COMPLETABLEFUTURE", result);
+	}
+	
+	@Test
+	void helloWorld_3_async_calls_custom_threadPool_async() {
+		
+		//when
+		String result = cfhw.helloWorld_3_async_calls_custom_threadPool_async();
+		
+		//then world! Hi CompletableFuture
+		assertEquals("HELLO WORLD! HI COMPLETABLEFUTURE", result);
+	}
+	
+	@Test
+	void helloWorld_3_async_calls_log() {
+		
+		//when
+		String result = cfhw.helloWorld_3_async_calls_log();
+		
+		//then world! Hi CompletableFuture
+		assertEquals("HELLO WORLD! HI COMPLETABLEFUTURE", result);
+	}
+	
+	@Test
+	void helloWorld_3_async_calls_log_async() {
+		
+		//when
+		String result = cfhw.helloWorld_3_async_calls_log_async();
+		
+		//then world! Hi CompletableFuture
+		assertEquals("HELLO WORLD! HI COMPLETABLEFUTURE", result);
 	}
 	
 	@Test
