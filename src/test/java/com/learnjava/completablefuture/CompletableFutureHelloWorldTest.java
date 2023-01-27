@@ -108,4 +108,10 @@ class CompletableFutureHelloWorldTest {
 		CommonUtil.timeTaken();
 	}
 	
+	@Test
+	void anyOf() {
+		String result = cfhw.anyOf();
+		assertEquals("hello world", result);
+	}
+	
 }

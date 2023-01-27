@@ -4,6 +4,7 @@ import static com.learnjava.util.CommonUtil.startTimer;
 import static com.learnjava.util.CommonUtil.timeTaken;
 import static com.learnjava.util.LoggerUtil.log;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,6 +23,36 @@ public class CompletableFutureHelloWorld {
 
 	public CompletableFuture<String> helloWorld() {
 		return CompletableFuture.supplyAsync(hws::helloWorld).thenApply(result -> result.toUpperCase());
+	}
+
+	public String anyOf() {
+		CompletableFuture<String> db = CompletableFuture.supplyAsync(() -> {
+			CommonUtil.delay(5000);
+			LoggerUtil.log("response form db");
+			return "hello world";
+		});
+
+		CompletableFuture<String> restApi = CompletableFuture.supplyAsync(() -> {
+			CommonUtil.delay(2000);
+			LoggerUtil.log("response form rest");
+			return "hello world";
+		});
+
+		CompletableFuture<String> soapApi = CompletableFuture.supplyAsync(() -> {
+			CommonUtil.delay(3000);
+			LoggerUtil.log("response form soap");
+			return "hello world";
+		});
+
+		List<CompletableFuture<String>> cfList = List.of(db, restApi, soapApi);
+		CompletableFuture<Object> cfAnyOf = CompletableFuture
+				.anyOf(cfList.toArray(new CompletableFuture[cfList.size()]));
+		return (String) cfAnyOf.thenApply(v -> {
+			if (v instanceof String) {
+				return v;
+			}
+			return null;
+		}).join();
 	}
 
 	public String helloWorld_approach1() {
@@ -79,7 +110,7 @@ public class CompletableFutureHelloWorld {
 		timeTaken();
 		return helloWorld;
 	}
-	
+
 	public String helloWorld_3_async_calls_log_async() {
 		startTimer();
 		CompletableFuture<String> hello = CompletableFuture.supplyAsync(() -> hws.hello());
@@ -103,7 +134,7 @@ public class CompletableFutureHelloWorld {
 		timeTaken();
 		return helloWorld;
 	}
-	
+
 	public String helloWorld_3_async_calls_custom_threadPool() {
 		startTimer();
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
@@ -128,7 +159,7 @@ public class CompletableFutureHelloWorld {
 		timeTaken();
 		return helloWorld;
 	}
-	
+
 	public String helloWorld_3_async_calls_custom_threadPool_async() {
 		startTimer();
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
