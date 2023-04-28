@@ -9,6 +9,7 @@ public class CommonUtil {
 	public static void delay(long delayMilliSeconds) {
 		try {
 			Thread.sleep(delayMilliSeconds);
+			LoggerUtil.log("Delay is :" + delayMilliSeconds);
 		} catch (InterruptedException e) {
 			LoggerUtil.log("Exception is :" + e.getMessage());
 		}
